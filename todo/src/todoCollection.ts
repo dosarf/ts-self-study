@@ -31,4 +31,10 @@ export class TodoCollection {
       todoItem.complete = complete;
     }
   }
+
+  getTodoItems(includeComplete: boolean = false) : TodoItem[] {
+    return [...this.itemMap.values()].filter(
+      item => includeComplete || !item.complete
+    );
+  }
 }
