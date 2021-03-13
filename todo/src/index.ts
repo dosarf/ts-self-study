@@ -19,4 +19,10 @@ let todoItem = collection.getTodoById(newId);
 // console.log(JSON.stringify(todoItem));
 // todoItem.printDetails()
 
-collection.getTodoItems().forEach(item => item.printDetails());
+collection.getTodoItems(true).forEach(item => item.printDetails());
+
+console.log("Removing completed TODO items");
+
+collection.removeComplete();
+
+collection.getTodoItems(true).forEach(item => item.printDetails());
