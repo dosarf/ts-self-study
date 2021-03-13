@@ -19,6 +19,8 @@ let todoItem = collection.getTodoById(newId);
 // console.log(JSON.stringify(todoItem));
 // todoItem.printDetails()
 
+let itemCounts = collection.getItemCounts()
+console.log(`Incomplete: ${itemCounts.incomplete} / ${itemCounts.total}`)
 collection.getTodoItems(true).forEach(item => item.printDetails());
 
 console.log("Removing completed TODO items");
