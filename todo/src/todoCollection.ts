@@ -8,7 +8,7 @@ type ItemCounts = {
 
 export class TodoCollection {
   private nextId: number = 1;
-  private itemMap = new Map<number, TodoItem>();
+  protected itemMap = new Map<number, TodoItem>();
 
   constructor(
     public userName: string,
@@ -31,7 +31,7 @@ export class TodoCollection {
     return this.itemMap.get(id);
   }
 
-  markComplete(id: number, complete: boolean) {
+  markComplete(id: number, complete: boolean) : void {
     const todoItem = this.getTodoById(id);
     if (todoItem) {
       todoItem.complete = complete;
@@ -44,7 +44,7 @@ export class TodoCollection {
     );
   }
 
-  removeComplete() {
+  removeComplete() : void {
     this.itemMap.forEach(item => {
       if (item.complete) {
         this.itemMap.delete(item.id)
