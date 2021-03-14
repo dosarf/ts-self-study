@@ -1,5 +1,6 @@
 import { TodoItem } from "./todoItem";
 import { TodoCollection } from "./todoCollection";
+import * as inquirer from 'inquirer';
 
 let todos = [
   new TodoItem(1, "Buy Flowers"),
@@ -10,21 +11,34 @@ let todos = [
 
 let collection = new TodoCollection("Feri", todos)
 
-// console.clear();
-console.log(`${collection.userName}'s Todo List'`);
-
 let newId = collection.addTodo("Go for run");
 let todoItem = collection.getTodoById(newId);
 
-// console.log(JSON.stringify(todoItem));
-// todoItem.printDetails()
+function displayTodoList() : void {
+  console.log(
+    `${collection.userName}'s Todo List'`
+    + `(${    collection.getItemCounts().incomplete } items to do)`
+  );
+  collection.getTodoItems(true).forEach(item => item.printDetails());
+}
 
-let itemCounts = collection.getItemCounts()
-console.log(`Incomplete: ${itemCounts.incomplete} / ${itemCounts.total}`)
-collection.getTodoItems(true).forEach(item => item.printDetails());
+enum Commands {
+  Quit = "Quit"
+}
 
-console.log("Removing completed TODO items");
+function promptUser() : void {
+  console.clear();
+  displayTodoList();
+  inquirer.prompt({
+    type: "list",
+    name: "command",
+    message: "Choose option",
+    choices: Object.values(Commands)
+  }).then(answers => {
+    if (answers["command"] !== Commands.Quit) {
+      promptUser();
+    }
+  });
+}
 
-collection.removeComplete();
-
-collection.getTodoItems(true).forEach(item => item.printDetails());
+promptUser();
